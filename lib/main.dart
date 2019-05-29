@@ -39,7 +39,7 @@ class RandomWordsState extends State<RandomWords> {
   Widget _buildRow(WordPair pair, int index) {
     return new ListTile(
         title:
-            new Text('${index + 1}. pair.asPascalCase', style: _larggerFont));
+            new Text('${index + 1}. ${pair.asPascalCase}', style: _larggerFont));
   }
 
   @override
