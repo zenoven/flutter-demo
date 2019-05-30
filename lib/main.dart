@@ -23,6 +23,16 @@ class RandomWordsState extends State<RandomWords> {
 
   final _larggerFont = const TextStyle(fontSize: 18.0);
 
+  @override
+  Widget build(BuildContext ctx) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('hello inner title'),
+      ),
+      body: _buildSuggestions(),
+    );
+  }
+
   Widget _buildSuggestions() {
     return new ListView.builder(
       padding: const EdgeInsets.all(20.0),
@@ -43,16 +53,6 @@ class RandomWordsState extends State<RandomWords> {
         '${index + 1}. ${pair.asPascalCase}',
         style: _larggerFont,
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext ctx) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('hello inner title'),
-      ),
-      body: _buildSuggestions(),
     );
   }
 }
