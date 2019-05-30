@@ -1,5 +1,16 @@
+import 'package:english_words/english_words.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+
+final _iconMap = {
+  'saved': new Icon(
+    Icons.favorite,
+    color: Colors.red,
+  ),
+  'normal': new Icon(
+    Icons.favorite,
+  ),
+};
 
 void main() => runApp(new MyAPP());
 
@@ -23,12 +34,14 @@ class RandomWordsState extends State<RandomWords> {
 
   final _larggerFont = const TextStyle(fontSize: 18.0);
 
+  final _saved = new Set<WordPair>();
+
   @override
   Widget build(BuildContext ctx) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('hello inner title'),
-      ),
+          // title: new Text('hello inner title'),
+          ),
       body: _buildSuggestions(),
     );
   }
@@ -48,11 +61,24 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair, int index) {
+    final alreadySaved = _saved.contains(pair);
+    final icon = alreadySaved ? 'saved' : 'normal';
+
     return new ListTile(
       title: new Text(
         '${index + 1}. ${pair.asPascalCase}',
         style: _larggerFont,
       ),
+      trailing: _iconMap[icon],
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
   }
 }
