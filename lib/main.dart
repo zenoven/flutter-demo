@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter_demo/detai.dart';
 import 'package:flutter_demo/detail.dart';
 import 'package:flutter_demo/saved.dart';
 
