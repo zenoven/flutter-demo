@@ -1,6 +1,7 @@
-import 'package:english_words/english_words.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+
+final _anchorKey = GlobalKey();
 
 final _iconMap = {
   'saved': new Icon(
@@ -40,13 +41,13 @@ class RandomWordsState extends State<RandomWords> {
   Widget build(BuildContext ctx) {
     return new Scaffold(
       appBar: new AppBar(
-          // title: new Text('hello inner title'),
-          ),
-      body: _buildSuggestions(),
+        title: new Text('hello inner title'),
+      ),
+      body: _buildSuggestions(ctx),
     );
   }
 
-  Widget _buildSuggestions() {
+  Widget _buildSuggestions(BuildContext ctx) {
     return new ListView.builder(
       padding: const EdgeInsets.all(20.0),
       itemBuilder: (ctx, i) {
@@ -55,16 +56,17 @@ class RandomWordsState extends State<RandomWords> {
         if (index >= _wordList.length) {
           _wordList.addAll(generateWordPairs().take(10));
         }
-        return _buildRow(_wordList[index], index);
+        return _buildRow(_wordList[index], index, ctx);
       },
     );
   }
 
-  Widget _buildRow(WordPair pair, int index) {
+  Widget _buildRow(WordPair pair, int index, BuildContext ctx) {
     final alreadySaved = _saved.contains(pair);
     final icon = alreadySaved ? 'saved' : 'normal';
 
     return new ListTile(
+      key: _anchorKey,
       title: new Text(
         '${index + 1}. ${pair.asPascalCase}',
         style: _larggerFont,
