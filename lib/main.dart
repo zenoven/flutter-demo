@@ -19,6 +19,9 @@ class MyAPP extends StatelessWidget {
     return MaterialApp(
       title: 'hello app title',
       home: new RandomWords(),
+      theme: new ThemeData(
+        primaryColor: Colors.black,
+      ),
     );
   }
 }
