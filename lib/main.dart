@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
-final _anchorKey = GlobalKey();
-
 final _iconMap = {
   'saved': new Icon(
     Icons.favorite,
@@ -37,11 +35,39 @@ class RandomWordsState extends State<RandomWords> {
 
   final _saved = new Set<WordPair>();
 
+  void _toggleSaved() {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      final tiles = _saved.map((pair) {
+        return new ListTile(
+          title: new Text(
+            pair.asPascalCase,
+            style: _larggerFont,
+          ),
+        );
+      });
+      final divided = ListTile.divideTiles(
+        context: context,
+        tiles: tiles,
+      ).toList();
+      return new Scaffold(
+          appBar: new AppBar(title: new Text('Saved Words')),
+          body: new ListView(
+            children: divided,
+          ));
+    }));
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('hello inner title'),
+        actions: <Widget>[
+          new IconButton(
+            icon: _iconMap['saved'],
+            onPressed: _toggleSaved,
+          ),
+        ],
       ),
       body: _buildSuggestions(ctx),
     );
@@ -66,7 +92,6 @@ class RandomWordsState extends State<RandomWords> {
     final icon = alreadySaved ? 'saved' : 'normal';
 
     return new ListTile(
-      key: _anchorKey,
       title: new Text(
         '${index + 1}. ${pair.asPascalCase}',
         style: _larggerFont,
