@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_demo/detai.dart';
+import 'package:flutter_demo/saved.dart';
 
 final _iconMap = {
   'saved': new Icon(
@@ -53,13 +54,7 @@ class RandomWordsState extends State<RandomWords> {
         context: context,
         tiles: tiles,
       ).toList();
-      return new Detail();
-      // return new Scaffold(
-      //   appBar: new AppBar(title: new Text('Saved Words')),
-      //   body: new ListView(
-      //     children: divided,
-      //   ),
-      // );
+      return new Saved(_saved, _larggerFont);
     }));
   }
 
