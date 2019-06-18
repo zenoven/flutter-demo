@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_demo/detai.dart';
+import 'package:flutter_demo/detail.dart';
 import 'package:flutter_demo/saved.dart';
 
 final _iconMap = {
@@ -42,19 +43,13 @@ class RandomWordsState extends State<RandomWords> {
 
   void _toggleSaved() {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      final tiles = _saved.map((pair) {
-        return new ListTile(
-          title: new Text(
-            pair.asPascalCase,
-            style: _larggerFont,
-          ),
-        );
-      });
-      final divided = ListTile.divideTiles(
-        context: context,
-        tiles: tiles,
-      ).toList();
       return new Saved(_saved, _larggerFont);
+    }));
+  }
+
+  void _toggleDetail() {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new Detail();
     }));
   }
 
@@ -65,8 +60,16 @@ class RandomWordsState extends State<RandomWords> {
         title: new Text('hello inner title'),
         actions: <Widget>[
           new IconButton(
-            icon: _iconMap['saved'],
+            icon: new Icon(
+              Icons.favorite,
+            ),
             onPressed: _toggleSaved,
+          ),
+          new IconButton(
+            icon: new Icon(
+              Icons.more_vert,
+            ),
+            onPressed: _toggleDetail,
           ),
         ],
       ),
