@@ -35,6 +35,12 @@ Column buildButtonColumn(IconData icon, String label, BuildContext context) {
 class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Widget headerSection = new Image.asset(
+      'assets/images/lake.jpeg',
+      height: 30.0,
+      fit: BoxFit.cover,
+    );
+
     Widget titleSection = new Container(
       padding: EdgeInsets.all(_gutter),
       child: new Row(
@@ -62,13 +68,47 @@ class Detail extends StatelessWidget {
         ],
       ),
     );
+
     Widget buttonsSection = new Row(
-      children: List.from(
-        _buttonsList.map((item) {
-          return buildButtonColumn(item['icon'], item['label'], context).;
-        })
+      children: List.from(_buttonsList.map((item) {
+        return buildButtonColumn(
+          item['icon'],
+          item['label'].toString().toUpperCase(),
+          context,
+        );
+      })),
+    );
+
+    Widget descriptionSection = new Row(
+      children: [
+        new Container(
+          padding: EdgeInsets.all(_gutter),
+          child: new Text(
+            '''
+            Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situated 1,578 meters above sea level, it is one of the larger Alpine Lakes. A gondola ride from Kandersteg, followed by a half-hour walk through pastures and pine forest, leads you to the lake, which warms to 20 degrees Celsius in the summer. Activities enjoyed here include rowing, and riding the summer toboggan run.
+            ''',
+            softWrap: true,
+          ),
+        ),
+      ],
+    );
+
+    return new MaterialApp(
+      title: 'Detail',
+      theme: new ThemeData(primarySwatch: Colors.white),
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Detail title'),
+        ),
+        body: new ListView(
+          children: <Widget>[
+            headerSection,
+            titleSection,
+            buttonsSection,
+            descriptionSection,
+          ],
+        ),
       ),
     );
-    return titleSection;
   }
 }
