@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_demo/detail.dart';
 import 'package:flutter_demo/saved.dart';
+import 'package:flutter_demo/test.dart';
 
 final _iconMap = {
   'saved': new Icon(
@@ -11,6 +12,14 @@ final _iconMap = {
   'normal': new Icon(
     Icons.favorite,
   ),
+};
+final _saved = new Set<WordPair>();
+final _larggerFont = const TextStyle(fontSize: 18.0);
+
+final _routes = <String, WidgetBuilder>{
+  'saved': (buildContext) => new Saved(_saved, _larggerFont),
+  'detail': (buildContext) => new Detail(),
+  'test': (buildContext) => new Test(),
 };
 
 void main() => runApp(new MyAPP());
@@ -24,6 +33,7 @@ class MyAPP extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.black,
       ),
+      routes: _routes,
     );
   }
 }
@@ -36,20 +46,8 @@ class RandomWords extends StatefulWidget {
 class RandomWordsState extends State<RandomWords> {
   final _wordList = <WordPair>[];
 
-  final _larggerFont = const TextStyle(fontSize: 18.0);
-
-  final _saved = new Set<WordPair>();
-
-  void _toggleSaved() {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new Saved(_saved, _larggerFont);
-    }));
-  }
-
-  void _toggleDetail() {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new Detail();
-    }));
+  void _goto(route) {
+    Navigator.of(context).pushNamed(route);
   }
 
   @override
@@ -62,13 +60,19 @@ class RandomWordsState extends State<RandomWords> {
             icon: new Icon(
               Icons.favorite,
             ),
-            onPressed: _toggleSaved,
+            onPressed: () => _goto('saved'),
+          ),
+          new IconButton(
+            icon: new Icon(
+              Icons.message,
+            ),
+            onPressed: () => _goto('test'),
           ),
           new IconButton(
             icon: new Icon(
               Icons.more_vert,
             ),
-            onPressed: _toggleDetail,
+            onPressed: () => _goto('detail'),
           ),
         ],
       ),
