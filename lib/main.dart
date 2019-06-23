@@ -1,26 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter_demo/screens/detail.dart';
-import 'package:flutter_demo/screens/saved.dart';
-import 'package:flutter_demo/screens/test.dart';
+import 'package:flutter_demo/common/ui.dart';
+import 'package:flutter_demo/common/config.dart';
 
-final _iconMap = {
-  'saved': new Icon(
-    Icons.favorite,
-    color: Colors.red,
-  ),
-  'normal': new Icon(
-    Icons.favorite,
-  ),
-};
 final _saved = new Set<WordPair>();
-final _larggerFont = const TextStyle(fontSize: 18.0);
-
-final _routes = <String, WidgetBuilder>{
-  'saved': (buildContext) => new Saved(_saved, _larggerFont),
-  'detail': (buildContext) => new Detail(),
-  'test': (buildContext) => new Test(),
-};
 
 void main() => runApp(new MyAPP());
 
@@ -33,7 +16,7 @@ class MyAPP extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.black,
       ),
-      routes: _routes,
+      routes: getRoutes(_saved),
     );
   }
 }
@@ -101,9 +84,9 @@ class RandomWordsState extends State<RandomWords> {
     return new ListTile(
       title: new Text(
         '${index + 1}. ${pair.asPascalCase}',
-        style: _larggerFont,
+        style: larggerFont,
       ),
-      trailing: _iconMap[icon],
+      trailing: iconMap[icon],
       onTap: () {
         setState(() {
           if (alreadySaved) {

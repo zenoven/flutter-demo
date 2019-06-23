@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
+import 'package:flutter_demo/common/ui.dart';
+
 class Saved extends StatelessWidget {
   final Set<WordPair> saved;
-  final TextStyle style;
 
-  Saved(this.saved, this.style);
+  Saved(this.saved);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class Saved extends StatelessWidget {
       return new ListTile(
         title: new Text(
           pair.asPascalCase,
-          style: style,
+          style: larggerFont,
         ),
       );
     });
