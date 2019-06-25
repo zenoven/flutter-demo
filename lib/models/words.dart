@@ -33,7 +33,7 @@ class WordModel extends ChangeNotifier {
     return true;
   }
 
-  void addWordList(List<WordPair> wordList, {bool needNotify: true}) {
+  void addList(List<WordPair> wordList, {bool needNotify: true}) {
     all.addAll(wordList);
     notifyListeners();
   }
