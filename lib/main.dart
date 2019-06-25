@@ -32,10 +32,12 @@ class RandomWords extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final word = Provider.of<WordModel>(ctx);
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('${word.all.length}. hello inner title'),
+        title: Consumer<WordModel>(
+          builder: (ctx, word, child) =>
+              Text('${word.saved.length}/${word.length} '),
+        ),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(
@@ -68,8 +70,8 @@ class RandomWords extends StatelessWidget {
       itemBuilder: (ctx, i) {
         if (i.isOdd) return new Divider();
         final index = i ~/ 2;
-        if (index >= word.all.length) {
           word.addList(generateWordPairs().take(10).toList());
+        if (index >= word.length) {
         }
         return _buildRow(word.all[index], index, ctx);
       },
