@@ -70,8 +70,8 @@ class RandomWords extends StatelessWidget {
       itemBuilder: (ctx, i) {
         if (i.isOdd) return new Divider();
         final index = i ~/ 2;
-          word.addList(generateWordPairs().take(10).toList());
         if (index >= word.length) {
+          word.addList(generateWordPairs().take(10).toList());
         }
         return _buildRow(word.all[index], index, ctx);
       },
