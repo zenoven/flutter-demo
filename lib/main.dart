@@ -77,19 +77,22 @@ class RandomWords extends StatelessWidget {
   }
 
   Widget _buildRow(WordPair pair, int index, BuildContext ctx) {
-    final word = Provider.of<WordModel>(ctx, listen: false);
-    final saved = word.saved;
-    final alreadySaved = saved.contains(pair);
-    final icon = alreadySaved ? 'saved' : 'normal';
+    return Consumer<WordModel>(
+      builder: (context, word, child) {
+        final saved = word.saved;
+        final alreadySaved = saved.contains(pair);
+        final icon = alreadySaved ? 'saved' : 'normal';
 
-    return new ListTile(
-      title: new Text(
-        '${index + 1}. ${pair.asPascalCase}',
-        style: larggerFont,
-      ),
-      trailing: iconMap[icon],
-      onTap: () {
-        word.toggleSaved(pair);
+        return new ListTile(
+          title: new Text(
+            '${index + 1}. ${pair.asPascalCase}',
+            style: larggerFont,
+          ),
+          trailing: iconMap[icon],
+          onTap: () {
+            word.toggleSaved(pair);
+          },
+        );
       },
     );
   }
