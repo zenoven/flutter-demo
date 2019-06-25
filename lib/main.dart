@@ -25,13 +25,8 @@ class MyAPP extends StatelessWidget {
   }
 }
 
-class RandomWords extends StatefulWidget {
-  @override
-  createState() => new RandomWordsState();
-}
-
-class RandomWordsState extends State<RandomWords> {
-  void _goto(route) {
+class RandomWords extends StatelessWidget {
+  void _goto(context, route) {
     Navigator.of(context).pushNamed(route);
   }
 
@@ -46,19 +41,19 @@ class RandomWordsState extends State<RandomWords> {
             icon: new Icon(
               Icons.favorite,
             ),
-            onPressed: () => _goto('saved'),
+            onPressed: () => _goto(ctx, 'saved'),
           ),
           new IconButton(
             icon: new Icon(
               Icons.message,
             ),
-            onPressed: () => _goto('test'),
+            onPressed: () => _goto(ctx, 'test'),
           ),
           new IconButton(
             icon: new Icon(
               Icons.more_vert,
             ),
-            onPressed: () => _goto('detail'),
+            onPressed: () => _goto(ctx, 'detail'),
           ),
         ],
       ),
@@ -74,7 +69,7 @@ class RandomWordsState extends State<RandomWords> {
         if (i.isOdd) return new Divider();
         final index = i ~/ 2;
         if (index >= word.all.length) {
-          word.all.addAll(generateWordPairs().take(10));
+          word.addWordList(generateWordPairs().take(10).toList());
         }
         return _buildRow(word.all[index], index, ctx);
       },

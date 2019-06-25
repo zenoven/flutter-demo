@@ -33,13 +33,8 @@ class WordModel extends ChangeNotifier {
     return true;
   }
 
-  bool addWordSet(Set<WordPair> wordSet, {bool needNotify: true}) {
-    Set<WordPair> intersection = all.toSet().intersection(wordSet);
-    if (intersection.length == 0) {
-      return false;
-    }
-    all.addAll(intersection);
+  void addWordList(List<WordPair> wordList, {bool needNotify: true}) {
+    all.addAll(wordList);
     notifyListeners();
-    return true;
   }
 }
