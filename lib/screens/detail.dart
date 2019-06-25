@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/models/words.dart';
+import 'package:provider/provider.dart';
 
 final _gutter = 32.0;
 
@@ -42,6 +44,7 @@ Column buildButtonColumn(IconData icon, String label, BuildContext context) {
 class Detail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final word = Provider.of<WordModel>(context, listen: false);
     Widget headerSection = new Image.asset(
       'assets/images/lake.jpeg',
       width: 600,
@@ -72,7 +75,7 @@ class Detail extends StatelessWidget {
             ),
           ),
           new Icon(Icons.star, color: Colors.yellow),
-          new Text('100')
+          new Text(word.all.length.toString())
         ],
       ),
     );

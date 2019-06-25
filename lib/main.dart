@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:english_words/english_words.dart';
+
+import 'package:flutter_demo/models/words.dart';
 import 'package:flutter_demo/common/ui.dart';
 import 'package:flutter_demo/common/config.dart';
-
-final _saved = new Set<WordPair>();
 
 void main() => runApp(new MyAPP());
 
 class MyAPP extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
-    return MaterialApp(
-      title: 'hello app title',
-      home: new RandomWords(),
-      theme: new ThemeData(
-        primaryColor: Colors.black,
+    return ChangeNotifierProvider(
+      builder: (context) => new WordModel(),
+      child: MaterialApp(
+        title: 'hello app title',
+        home: new RandomWords(),
+        theme: new ThemeData(
+          primaryColor: Colors.black,
+        ),
+        routes: routes,
       ),
-      routes: getRoutes(_saved),
     );
   }
 }
@@ -27,17 +31,16 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final _wordList = <WordPair>[];
-
   void _goto(route) {
     Navigator.of(context).pushNamed(route);
   }
 
   @override
   Widget build(BuildContext ctx) {
+    final word = Provider.of<WordModel>(ctx);
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('hello inner title'),
+        title: new Text('${word.all.length}. hello inner title'),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(
@@ -64,21 +67,24 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildSuggestions(BuildContext ctx) {
+    final word = Provider.of<WordModel>(ctx, listen: false);
     return new ListView.builder(
       padding: const EdgeInsets.all(20.0),
       itemBuilder: (ctx, i) {
         if (i.isOdd) return new Divider();
         final index = i ~/ 2;
-        if (index >= _wordList.length) {
-          _wordList.addAll(generateWordPairs().take(10));
+        if (index >= word.all.length) {
+          word.all.addAll(generateWordPairs().take(10));
         }
-        return _buildRow(_wordList[index], index, ctx);
+        return _buildRow(word.all[index], index, ctx);
       },
     );
   }
 
   Widget _buildRow(WordPair pair, int index, BuildContext ctx) {
-    final alreadySaved = _saved.contains(pair);
+    final word = Provider.of<WordModel>(ctx, listen: false);
+    final saved = word.saved;
+    final alreadySaved = saved.contains(pair);
     final icon = alreadySaved ? 'saved' : 'normal';
 
     return new ListTile(
@@ -88,13 +94,7 @@ class RandomWordsState extends State<RandomWords> {
       ),
       trailing: iconMap[icon],
       onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
+        word.toggleSaved(pair);
       },
     );
   }
