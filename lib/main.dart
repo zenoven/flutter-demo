@@ -26,18 +26,27 @@ class MyAPP extends StatelessWidget {
 }
 
 class RandomWords extends StatelessWidget {
+  final scrollController = ScrollController();
   void _goto(context, route) {
     Navigator.of(context).pushNamed(route);
   }
 
   @override
   Widget build(BuildContext ctx) {
+    WordModel word = Provider.of<WordModel>(ctx);
+    scrollController.addListener(() {
+      // print(scrollController.offset);
+      // print(
+      //     'scrollController.position.maxScrollExtent:${scrollController.position.maxScrollExtent}');
+      // if ((scrollController.offset + 200 <=
+      //         scrollController.position.maxScrollExtent) ||
+      //     word.length == 0) {
+      //   word.addList(generateWordPairs().take(10).toList());
+      // }
+    });
     return new Scaffold(
       appBar: new AppBar(
-        title: Consumer<WordModel>(
-          builder: (ctx, word, child) =>
-              Text('${word.saved.length}/${word.length}'),
-        ),
+        title: Text('${word.saved.length}/${word.length}'),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(
@@ -65,14 +74,13 @@ class RandomWords extends StatelessWidget {
 
   Widget _buildSuggestions(BuildContext ctx) {
     final word = Provider.of<WordModel>(ctx, listen: false);
+
     return new ListView.builder(
       padding: const EdgeInsets.all(20.0),
+      controller: scrollController,
       itemBuilder: (ctx, i) {
         if (i.isOdd) return new Divider();
         final index = i ~/ 2;
-        if (index >= word.length) {
-          word.addList(generateWordPairs().take(10).toList());
-        }
         return _buildRow(word.all[index], index, ctx);
       },
     );
