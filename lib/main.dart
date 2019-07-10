@@ -72,10 +72,7 @@ class RandomWords extends StatelessWidget {
   }
 
   Widget _buildSuggestions(BuildContext ctx) {
-    final word = Provider.of<WordModel>(
-      ctx,
-      listen: true,
-    );
+    final word = Provider.of<WordModel>(ctx);
     return new NotificationListener(
       onNotification: (ScrollNotification notice) {
         if (notice.metrics.extentAfter <= 200) {
@@ -88,7 +85,7 @@ class RandomWords extends StatelessWidget {
           return new Divider();
         },
         padding: const EdgeInsets.all(20.0),
-        itemCount: word.all.length,
+        itemCount: word.length,
         itemBuilder: _buildRow,
       ),
     );
