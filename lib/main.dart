@@ -12,7 +12,7 @@ class MyAPP extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return ChangeNotifierProvider(
-      builder: (context) => new WordModel(),
+      builder: (context) => new WordModel(initialCount: 50),
       child: MaterialApp(
         title: 'hello app title',
         home: new RandomWords(),

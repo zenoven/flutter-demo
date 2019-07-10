@@ -5,6 +5,10 @@ class WordModel extends ChangeNotifier {
   final all = new List<WordPair>();
   Set<WordPair> _saved = new Set<WordPair>();
 
+  WordModel({int initialCount: 100}) {
+    all.addAll(generateWordPairs().take(initialCount).toList());
+  }
+
   get length {
     print('get all.length:${all.length}');
     return all.length;
