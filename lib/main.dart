@@ -25,12 +25,7 @@ class MyAPP extends StatelessWidget {
   }
 }
 
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State {
+class RandomWords extends StatelessWidget {
   void _goto(context, route) {
     Navigator.of(context).pushNamed(route);
   }
