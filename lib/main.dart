@@ -32,6 +32,7 @@ class RandomWords extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    final word = Provider.of<WordModel>(ctx);
     return new Scaffold(
       appBar: new AppBar(
         title: Consumer<WordModel>(
@@ -41,15 +42,22 @@ class RandomWords extends StatelessWidget {
         actions: <Widget>[
           new IconButton(
             icon: new Icon(
-              Icons.favorite,
+              Icons.add_circle,
             ),
-            onPressed: () => _goto(ctx, 'saved'),
+            onPressed: () => word.add(generateWordPairs().take(1).toList()[0]),
           ),
           new IconButton(
             icon: new Icon(
-              Icons.message,
+              Icons.library_add,
             ),
-            onPressed: () => _goto(ctx, 'test'),
+            onPressed: () =>
+                word.addList(generateWordPairs().take(10).toList()),
+          ),
+          new IconButton(
+            icon: new Icon(
+              Icons.favorite,
+            ),
+            onPressed: () => _goto(ctx, 'saved'),
           ),
           new IconButton(
             icon: new Icon(
