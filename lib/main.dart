@@ -37,7 +37,7 @@ class RandomWords extends StatelessWidget {
       appBar: new AppBar(
         title: Consumer<WordModel>(
           builder: (ctx, word, child) =>
-              Text('${word.saved.length}/${word.length}'),
+              Text('${word.saved.length}/${word.count}'),
         ),
         actions: <Widget>[
           new IconButton(
@@ -85,7 +85,7 @@ class RandomWords extends StatelessWidget {
           return new Divider();
         },
         padding: const EdgeInsets.all(20.0),
-        itemCount: word.length,
+        itemCount: word.count,
         itemBuilder: _buildRow,
       ),
     );

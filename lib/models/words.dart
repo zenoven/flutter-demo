@@ -9,7 +9,7 @@ class WordModel extends ChangeNotifier {
     all.addAll(generateWordPairs().take(initialCount).toList());
   }
 
-  get length {
+  get count {
     return all.length;
   }
 
