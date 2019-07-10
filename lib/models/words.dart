@@ -10,7 +10,6 @@ class WordModel extends ChangeNotifier {
   }
 
   get length {
-    print('get all.length:${all.length}');
     return all.length;
   }
 
@@ -45,7 +44,6 @@ class WordModel extends ChangeNotifier {
   void addList(List<WordPair> wordList, {bool needNotify: true}) {
     all.addAll(wordList);
     if (needNotify) {
-      print('notify at adding word list');
       notifyListeners();
     }
   }
