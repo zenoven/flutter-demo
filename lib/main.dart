@@ -25,14 +25,19 @@ class MyAPP extends StatelessWidget {
   }
 }
 
-class RandomWords extends StatelessWidget {
+class RandomWords extends StatefulWidget {
+  @override
+  _RandomWordsState createState() => _RandomWordsState();
+}
+
+class _RandomWordsState extends State {
   void _goto(context, route) {
     Navigator.of(context).pushNamed(route);
   }
 
   @override
   Widget build(BuildContext ctx) {
-    final word = Provider.of<WordModel>(ctx);
+    final word = Provider.of<WordModel>(ctx, listen: false);
     return new Scaffold(
       appBar: new AppBar(
         title: Consumer<WordModel>(
@@ -72,37 +77,43 @@ class RandomWords extends StatelessWidget {
   }
 
   Widget _buildSuggestions(BuildContext ctx) {
-    final word = Provider.of<WordModel>(ctx, listen: false);
-    return new ListView.builder(
-      padding: const EdgeInsets.all(20.0),
-      itemBuilder: (ctx, i) {
-        if (i.isOdd) return new Divider();
-        final index = i ~/ 2;
-        if (index >= word.length) {
-          word.addList(generateWordPairs().take(10).toList());
+    final word = Provider.of<WordModel>(
+      ctx,
+      listen: true,
+    );
+    return new NotificationListener(
+      onNotification: (ScrollNotification notice) {
+        if (notice.metrics.extentAfter <= 200) {
+          word.addList(generateWordPairs().take(30).toList());
         }
-        return _buildRow(word.all[index], index, ctx);
+        return;
       },
+      child: new ListView.separated(
+        separatorBuilder: (BuildContext ctx, int count) {
+          return new Divider();
+        },
+        padding: const EdgeInsets.all(20.0),
+        itemCount: word.all.length,
+        itemBuilder: _buildRow,
+      ),
     );
   }
 
-  Widget _buildRow(WordPair pair, int index, BuildContext ctx) {
-    return Consumer<WordModel>(
-      builder: (context, word, child) {
-        final saved = word.saved;
-        final alreadySaved = saved.contains(pair);
-        final icon = alreadySaved ? 'saved' : 'normal';
+  Widget _buildRow(BuildContext ctx, int index) {
+    final word = Provider.of<WordModel>(ctx, listen: false);
+    final saved = word.saved;
+    final pair = word.all[index];
+    final alreadySaved = saved.contains(pair);
+    final icon = alreadySaved ? 'saved' : 'normal';
 
-        return new ListTile(
-          title: new Text(
-            '${index + 1}. ${pair.asPascalCase}',
-            style: larggerFont,
-          ),
-          trailing: iconMap[icon],
-          onTap: () {
-            word.toggleSaved(pair);
-          },
-        );
+    return new ListTile(
+      title: new Text(
+        '${index + 1}. ${pair.asPascalCase}',
+        style: larggerFont,
+      ),
+      trailing: iconMap[icon],
+      onTap: () {
+        word.toggleSaved(pair);
       },
     );
   }
