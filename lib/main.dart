@@ -44,12 +44,6 @@ class RandomWords extends StatelessWidget {
             icon: new Icon(
               Icons.add_circle,
             ),
-            onPressed: () => word.add(generateWordPairs().take(1).toList()[0]),
-          ),
-          new IconButton(
-            icon: new Icon(
-              Icons.library_add,
-            ),
             onPressed: () =>
                 word.addList(generateWordPairs().take(10).toList()),
           ),
