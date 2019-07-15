@@ -16,7 +16,7 @@ Future<File> wirteFile(String fileName, String content) async {
   return file.writeAsString(content);
 }
 
-FutureM<String> getContent(String fileName) async {
+Future<String> getContent(String fileName) async {
   final file = await getFile(fileName);
   return await file.readAsString();
 }
